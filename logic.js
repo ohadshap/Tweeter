@@ -21,7 +21,7 @@ const Tweeter = function() {
     ]
  /////////post array ends here///////////
 
-    let postIdCounter = posts.length
+    let postIdCounter = 2
     let counter = 6
     
     const commentIdCounter = () =>  ++counter
@@ -30,14 +30,13 @@ const Tweeter = function() {
     const getPosts = () =>  posts
 
     const addPost = (text) => {
-        let newPostIdNum = postIdCounter + 1 
-        const newPost = {
+        let newPostIdNum = ++postIdCounter 
+        const post = {
             text: text,
             id: `p${newPostIdNum}`,
             comments: []
         }
-        addedPosts++
-        posts.push(newPost)
+        posts.push(post)
     }
 
     const removePost = (postID) => {
