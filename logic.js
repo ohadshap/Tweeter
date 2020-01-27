@@ -21,23 +21,18 @@ const Tweeter = function() {
     ]
  /////////post array ends here///////////
 
-    let addedPosts = 0
-    let postIdCounter = 2 + addedPosts
+    let postIdCounter = posts.length
+    let counter = 6
     
-    const commentIdCounter = () => {
-        counter = 0
-        for(let post of posts) {
-            counter += post.comments.length
-        }
-        return counter
-    }
+    const commentIdCounter = () =>  ++counter
+    
 
-    const getPosts = () => {return posts}
+    const getPosts = () =>  posts
 
-    const addPost = (newText) => {
+    const addPost = (text) => {
         let newPostIdNum = postIdCounter + 1 
         const newPost = {
-            text: newText,
+            text: text,
             id: `p${newPostIdNum}`,
             comments: []
         }
@@ -46,32 +41,32 @@ const Tweeter = function() {
     }
 
     const removePost = (postID) => {
-        for(let post in posts) {
-            if (posts[post].id == postID) {
-                posts.splice(post, 1)
+        for(let i in posts) {
+            if (posts[i].id == postID) {
+                posts.splice(i, 1)
             }
         }
     }
 
-    const addComment = (newText, postID) => {
-        let newCommentIdNum = commentIdCounter() +1
-        const newComment = {
-            id: `c${newCommentIdNum}`,
-            text: newText
+    const addComment = (text, postID) => {
+        commentIdCounter()
+        const comment = {
+            id: `c${counter}`,
+            text: text
         }
-        for(let post in posts) {
-            if(posts[post].id == postID) {
-                posts[post].comments.push(newComment)
+        for(let i in posts) {
+            if(posts[i].id == postID) {
+                posts[i].comments.push(comment)
             }
         }
     }
 
     const removeComment = (postID, commentID) => {
-        for(let post in posts) {
-            if(posts[post].id == postID) {
-                for(let comment in posts[post].comments) {
-                    if(posts[post].comments[comment].id == commentID) {
-                        posts[post].comments.splice(comment, 1)
+        for(let post of posts) {
+            if(post.id == postID) {
+                for(let i in post.comments) {
+                    if(post.comments[i].id == commentID) {
+                        post.comments.splice(i, 1)
                     }
                 }
             }
@@ -81,36 +76,3 @@ const Tweeter = function() {
     return {postIdCounter, commentIdCounter, getPosts, addPost, removePost, addComment, removeComment}
 
 }
-
-// const tweeter = Tweeter()
-
-
-// tweeter.addPost("This is my own post!")
-// console.log(tweeter.getPosts())
-//This should be added to the posts array:
-//{text: "This is my own post!", id: "p3", comments: []}
-
-// tweeter.removePost("p1")
-// console.log(tweeter.getPosts())
-//There should only be two posts in the post's array:
-//{text: "Aw man, I wanted to be first", id: "p2", comments: Array(3)}
-//{text: "This is my own post!", id: "p3", comments: []}
-
-//============================
-//============================
-//Stop here
-//Make sure everything works. Then keep going
-
-// tweeter.addComment("Damn straight it is!", "p3")
-// tweeter.addComment("Second the best!", "p2")
-// console.log(tweeter.getPosts())
-//This should be added to the third post's comments array:
-//{id: "c7", text: "Damn straight it is!"}
-
-//This should be added to the second post's comments array:
-//{id: "c8", text: "Second the best!"}
-
-// tweeter.removeComment("p2", "c6")
-// console.log(tweeter.getPosts())
-//This comment should be removed:
-//// {id: "c6", text: "Haha second place what a joke."}
